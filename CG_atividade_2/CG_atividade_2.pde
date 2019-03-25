@@ -10,9 +10,10 @@ float p_predio_altura = 0.5, p_predio_largura = 0.25;
 float p_portao_altura = 0.2, p_portao_largura = 0.5;
 float p_janela_altura = 0.12, p_janela_largura = 0.4;
 float p_raio_macaneta = 0.01;
+float p_arvore_altura = 0.16, p_arvore_largura = 0.1;
 
 int predio_altura, predio_largura;
-int janela_altura, janela_largura;
+int janela_altura, janela_largura, arvore_altura, arvore_largura, raio_copa;
 int raio_macaneta;
 int dist_macaneta;
 
@@ -60,6 +61,15 @@ void draw()
      
    }
 
+
+  // Arvore
+  arvore_altura = int(width * p_arvore_altura);
+  arvore_largura = int(height * p_arvore_largura );
+  raio_copa = int( height * 0.25 );
+  PVector pos_arvore = new PVector( width - arvore_largura - raio_copa , height - arvore_altura - mg_chao  );
+  rect( pos_arvore.x, pos_arvore.y, arvore_largura, arvore_altura );
+  ellipse( pos_arvore.x, pos_arvore.y, raio_copa, raio_copa );
+  
   noLoop();
 }
 
