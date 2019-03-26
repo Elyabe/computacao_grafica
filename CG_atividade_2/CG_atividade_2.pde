@@ -17,6 +17,8 @@ int janela_altura, janela_largura, tronco_altura, tronco_largura, raio_copa;
 int raio_macaneta;
 int dist_macaneta;
 
+ArrayList<PVector> janelas_abertas = new ArrayList<PVector>(); 
+int qtd_janelas_abertas = 3;
 void setup()
 {
   size( 800, 600 );
@@ -49,12 +51,25 @@ void draw()
    janela_altura = int( p_janela_altura * predio_altura);
    janela_largura = int( p_janela_largura * predio_largura );
    
+   //Sorteia quais janelas estarão abertas
+   
+   while( qtd_janelas_abertas > 0 )
+   {
+     PVector nova_janela = new PVector( int(random(4)), int(random(2)) );
+     if ( !janelas_abertas.contains(nova_janela) ) 
+      {
+        janelas_abertas.add(nova_janela);
+        qtd_janelas_abertas--;
+      }
+       println( nova_janela);
+   }
+   
    PVector pos = new PVector();
    for ( int fileira = 0; fileira < 5; fileira++ )
    {
      for ( int lado = 0; lado < 2; lado++ )
      {
-       boolean aberta = int(random(0,10))%2 == 0 ;
+       boolean aberta = !janelas_abertas.contains( new PVector(fileira,lado) ) ;
        pos.x = lado * ( int(pos_predio.x) + mg_janela_predio ) + (1-lado)*( int(pos_predio.x) + predio_largura - mg_janela_predio - janela_largura ); 
        pos.y = predio_altura + fileira * ( janela_altura + mg_janela_predio ) + mg_janela_predio;
        construir_janela( int(pos.x), int(pos.y), aberta );
