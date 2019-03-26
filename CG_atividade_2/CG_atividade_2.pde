@@ -10,10 +10,10 @@ float p_predio_altura = 0.5, p_predio_largura = 0.25;
 float p_portao_altura = 0.2, p_portao_largura = 0.5;
 float p_janela_altura = 0.12, p_janela_largura = 0.4;
 float p_raio_macaneta = 0.01;
-float p_arvore_altura = 0.16, p_arvore_largura = 0.1;
+float p_tronco_altura = 0.16, p_tronco_largura = 0.1;
 
 int predio_altura, predio_largura;
-int janela_altura, janela_largura, arvore_altura, arvore_largura, raio_copa;
+int janela_altura, janela_largura, tronco_altura, tronco_largura, raio_copa;
 int raio_macaneta;
 int dist_macaneta;
 
@@ -29,6 +29,7 @@ void setup()
 
 void draw()
 {
+  
   predio_altura = int(height * p_predio_altura);
   predio_largura = int(width * p_predio_largura);
   
@@ -63,13 +64,22 @@ void draw()
 
 
   // Arvore
-  arvore_altura = int(width * p_arvore_altura);
-  arvore_largura = int(height * p_arvore_largura );
-  raio_copa = int( height * 0.25 );
-  PVector pos_arvore = new PVector( width - arvore_largura - raio_copa , height - arvore_altura - mg_chao  );
-  rect( pos_arvore.x, pos_arvore.y, arvore_largura, arvore_altura );
-  ellipse( pos_arvore.x, pos_arvore.y, raio_copa, raio_copa );
+  tronco_altura = int(width * p_tronco_altura);
+  tronco_largura = int(height * p_tronco_largura );
+  raio_copa = int( height * 0.2 );
+  PVector pos_tronco = new PVector( width - tronco_largura - raio_copa , height - tronco_altura - mg_chao  );
+  rect( pos_tronco.x, pos_tronco.y, tronco_largura, tronco_altura );
+  ellipse( pos_tronco.x, pos_tronco.y, raio_copa, raio_copa );
+  ellipse( pos_tronco.x + tronco_largura/2, pos_tronco.y*0.9, raio_copa, raio_copa );
+  ellipse( pos_tronco.x + tronco_largura, pos_tronco.y, raio_copa, raio_copa );
   
+  
+  // Nuvens
+  noStroke();
+  ellipse( 100, 100, 140, 80 );
+  ellipse( 120, 80, 70, 70 );
+  ellipse( 90, 80, 70, 70 );
+  //ellipse( 90, 30, 90, 50 );
   noLoop();
 }
 
@@ -84,4 +94,10 @@ void construir_janela(int x, int y, boolean aberta )
     line( x + janela_largura/2, y, x + janela_largura/2, y + janela_altura );
   
   fill(255);
+}
+
+
+void construir_nuvem( int x, int y )
+{
+   
 }
