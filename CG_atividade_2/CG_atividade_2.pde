@@ -31,19 +31,22 @@ void setup()
 
 void draw()
 {
-  
+  background(64,177,255);  
   predio_altura = int(height * p_predio_altura);
   predio_largura = int(width * p_predio_largura);
   
   
   int portao_altura = int(p_portao_altura * predio_altura), portao_largura = int(p_portao_largura * predio_largura) ;
   // Corpo do predio
+  fill(255,215,0);
   rect( pos_predio.x, predio_altura - mg_chao, predio_largura, predio_altura );
   // Portao
+  fill(#3f3f3f);
   pos_portao = new PVector( pos_predio.x + predio_largura/2 - portao_largura/2, height - portao_altura - mg_chao ); 
   rect( pos_portao.x, pos_portao.y, portao_largura, portao_altura);
   line( pos_portao.x + portao_largura/2, pos_portao.y, pos_portao.x + portao_largura/2, height - mg_chao );
   dist_macaneta = int(0.1*portao_largura);
+  fill(255);
   ellipse( pos_portao.x + portao_largura/2 - dist_macaneta, pos_portao.y + portao_altura/2, raio_macaneta , raio_macaneta );
   ellipse( pos_portao.x + portao_largura/2 + dist_macaneta, pos_portao.y + portao_altura/2, raio_macaneta, raio_macaneta );
   
@@ -52,7 +55,8 @@ void draw()
    janela_largura = int( p_janela_largura * predio_largura );
    
    //Sorteia quais janelas estarão abertas
-   
+   qtd_janelas_abertas = 3;
+   janelas_abertas.clear();
    while( qtd_janelas_abertas > 0 )
    {
      PVector nova_janela = new PVector( int(random(4)), int(random(2)) );
@@ -83,17 +87,17 @@ void draw()
   tronco_largura = int(height * p_tronco_largura );
   raio_copa = int( height * 0.2 );
   PVector pos_tronco = new PVector( width - tronco_largura - raio_copa , height - tronco_altura - mg_chao  );
+  fill(61,48,48);
   rect( pos_tronco.x, pos_tronco.y, tronco_largura, tronco_altura );
+  fill(80,200,120);
   ellipse( pos_tronco.x, pos_tronco.y, raio_copa, raio_copa );
   ellipse( pos_tronco.x + tronco_largura/2, pos_tronco.y*0.9, raio_copa, raio_copa );
   ellipse( pos_tronco.x + tronco_largura, pos_tronco.y, raio_copa, raio_copa );
   
   
   // Nuvens
-  noStroke();
-  ellipse( 100, 100, 140, 80 );
-  ellipse( 120, 80, 70, 70 );
-  ellipse( 90, 80, 70, 70 );
+  for ( int qtd_nuvens = 3; qtd_nuvens > 0; qtd_nuvens--) 
+    construir_nuvem( int(random(width)), int(random(height*0.4)) );
   //ellipse( 90, 30, 90, 50 );
   noLoop();
 }
@@ -114,5 +118,9 @@ void construir_janela(int x, int y, boolean aberta )
 
 void construir_nuvem( int x, int y )
 {
-   
+   noStroke();
+  fill(255);
+  ellipse( x, y, 0.18*width, 0.1*width );
+  ellipse( x, y-0.04*width, 0.08*width, 0.08*width );
+  //ellipse( x + 50, 0.8*y, 70, 70 );
 }
