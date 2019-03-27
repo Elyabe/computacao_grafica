@@ -1,5 +1,6 @@
 // Atividade 2 de Computação Gráfica
-// Elyabe Alves
+// Elyabe Alves (Ciência da Computação) - 2014203834
+// Usando percentuais para acompanhar o tamanho da janela
 // Legenda: p : percentual
 // mg : margem 
 
@@ -16,9 +17,11 @@ int predio_altura, predio_largura;
 int janela_altura, janela_largura, tronco_altura, tronco_largura, raio_copa;
 int raio_macaneta;
 int dist_macaneta;
+int qtd_janelas_abertas = 3;
 
 ArrayList<PVector> janelas_abertas = new ArrayList<PVector>(); 
-int qtd_janelas_abertas = 3;
+
+
 void setup()
 {
   size( 800, 600 );
@@ -39,7 +42,9 @@ void draw()
   int portao_altura = int(p_portao_altura * predio_altura), portao_largura = int(p_portao_largura * predio_largura) ;
   // Corpo do predio
   fill(255,215,0);
+  triangle(pos_predio.x, predio_altura - mg_chao, pos_predio.x + predio_largura, predio_altura - mg_chao,  pos_predio.x + predio_largura/2, predio_altura*0.7);
   rect( pos_predio.x, predio_altura - mg_chao, predio_largura, predio_altura );
+  
   // Portao
   fill(#3f3f3f);
   pos_portao = new PVector( pos_predio.x + predio_largura/2 - portao_largura/2, height - portao_altura - mg_chao ); 
@@ -59,7 +64,9 @@ void draw()
    janelas_abertas.clear();
    while( qtd_janelas_abertas > 0 )
    {
+     // Sorteia a fileira e o lado
      PVector nova_janela = new PVector( int(random(4)), int(random(2)) );
+     // Verifica se a janela já não foi sorteada
      if ( !janelas_abertas.contains(nova_janela) ) 
       {
         janelas_abertas.add(nova_janela);
@@ -68,9 +75,11 @@ void draw()
        println( nova_janela);
    }
    
+   // Plota as fileiras com duplas de janelas
    PVector pos = new PVector();
    for ( int fileira = 0; fileira < 5; fileira++ )
    {
+     // lado 0: esquerdo, lado 1: direito;
      for ( int lado = 0; lado < 2; lado++ )
      {
        boolean aberta = !janelas_abertas.contains( new PVector(fileira,lado) ) ;
@@ -95,18 +104,29 @@ void draw()
   ellipse( pos_tronco.x + tronco_largura, pos_tronco.y, raio_copa, raio_copa );
   
   
-  // Nuvens
+  // Nuvens com posições randômicas
   for ( int qtd_nuvens = 3; qtd_nuvens > 0; qtd_nuvens--) 
-    construir_nuvem( int(random(width)), int(random(height*0.4)) );
+    construir_nuvem( int(random(width)), int(random(height*0.3)) );
   //ellipse( 90, 30, 90, 50 );
+  
+  noFill();
+  stroke(2);
+  arc(50,55,50,50,  PI, 3*HALF_PI);
+  arc(0,55,50,50, 3*HALF_PI, 2*PI);
+  
   noLoop();
 }
 
-
+// Plota janela na posição desejada
+// x, y : Posição desejada
+// aberta : Se a janela deve ser construída aberta ou fechada
 void construir_janela(int x, int y, boolean aberta )
 {
+  // Troca cor se for fechada
   if ( !aberta )
     fill( 0,0,0 );
+  
+    
   rect( x, y, janela_largura, janela_altura );
   
   if( aberta )
@@ -115,12 +135,12 @@ void construir_janela(int x, int y, boolean aberta )
   fill(255);
 }
 
-
+// Plota nuvem na posição desejada
+// x, y: Posição da nova nuvem
 void construir_nuvem( int x, int y )
 {
-   noStroke();
+  noStroke();
   fill(255);
   ellipse( x, y, 0.18*width, 0.1*width );
   ellipse( x, y-0.04*width, 0.08*width, 0.08*width );
-  //ellipse( x + 50, 0.8*y, 70, 70 );
 }
