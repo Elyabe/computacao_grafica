@@ -1,5 +1,15 @@
-// Atividade 2 de Computação Gráfica
-// Elyabe Alves (Ciência da Computação) - 2014203834
+/* 
+CENTRO UNIVERSTÁRIO NORTE DO ESPÍRITO SANTO - CEUNES/ UFES
+TAREFA DE COMPUTAÇÂO GRÁFICA 2019/1
+AUTOR: ELYABE ALVES SANTOS
+CURSO: CIÊNCIA DA COMPUTAÇÃO
+MATRÍCULA: 2014203834
+
+OBJETIVO: Visualização de desenho usando formas geométricas
+CRIADO EM: 26/09/2019
+PROFESSOR: Jacques Facon
+*/
+
 // Usando percentuais para acompanhar o tamanho da janela
 // Legenda: p : percentual
 // mg : margem 
