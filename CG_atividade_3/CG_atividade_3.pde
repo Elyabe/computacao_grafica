@@ -1,13 +1,18 @@
 
 // Atividade do dia 27/09
-// Objetivo: Inserir e manipular imagem 
+// Objetivo: Inserir e manipular img_original 
 
-PImage imagem;
+PImage img_original, img_transformada;
+int img_largura, img_altura, k, k_transf;
+color px_valor;
+
 void setup()
 {
   size(800,600);
-  imagem = loadImage("presidentu.jpeg");
-  
+  img_original = loadImage("presidentu.jpeg");
+  img_transformada = loadImage("presidentu.jpeg");
+  img_largura = img_original.width;
+  img_altura = img_original.height;
 }
 
 
@@ -15,17 +20,27 @@ void draw()
 {
   background(255);
  
-   imagem.loadPixels();
-  for ( int i = 0; i < imagem.width * imagem.height; i++ )
+  // Carrega o array de pixels da imagem
+  img_transformada.loadPixels();
+  
+  for ( int x = 0; x < img_largura/2; x++ )
   {
-    if ( imagem.pixels[i] == color(255) )
+    for ( int y = 0; y < img_altura; y++ )
     {
-      imagem.pixels[i] = color(0);
-      println("trocou");
+         k = y*img_largura + x;
+         k_transf = y*img_largura + img_largura-1-x;
+//      Executa flip
+         px_valor = img_transformada.pixels[k];
+         img_transformada.pixels[k] = img_transformada.pixels[k_transf];
+         img_transformada.pixels[k_transf] = px_valor;
     }
   }
   
-  image(imagem,0,0);
+  img_transformada.updatePixels();
+  
+  // Plota as imagens na janela
+  image(img_original,0,0);
+  image(img_transformada,0,img_altura);
   
   noLoop();
 }
