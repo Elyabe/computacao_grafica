@@ -22,14 +22,22 @@ void setup()
 void draw()
 {
   background(255);
-  // Executa flip horizontal
-  img_transformada = refletir_eixo_x( img_original );
-  
-  // Plota as imagens na janela
   image(img_original,0,0);
-  image(img_transformada,0, img_original.height);
+  if ( keyPressed )
+  {
+      if ( keyCode == UP || keyCode == DOWN ){
+        // Flip vertical
+        img_transformada = refletir_eixo_x( img_original );
+      } else if ( keyCode == RIGHT || keyCode == LEFT ) {
+        // Flip horizontal
+        img_transformada = refletir_eixo_y( img_original );
+      } else 
+        img_transformada = img_original;
+      
+      image(img_transformada, 0, img_original.height);    
+  } 
   
-  noLoop();
+  //noLoop();
 }
 
 // Aplica transformação de reflexão HORIZONTAL em uma imagem
