@@ -11,25 +11,37 @@ PROFESSOR: Jacques Facon
 */
 
 PImage img_original, img_transformada;
-int img_largura, img_altura, k, k_transf;
-color px_valor;
 
 void setup()
 {
   size(800,600);
   img_original = loadImage("presidentu.jpeg");
-  img_transformada = loadImage("presidentu.jpeg");
-  img_largura = img_original.width;
-  img_altura = img_original.height;
 }
 
 
 void draw()
 {
   background(255);
- 
-  // Carrega o array de pixels da imagem
-  img_transformada.loadPixels();
+  // Executa flip horizontal
+  img_transformada = refletir_eixo_y( img_original );
+  
+  // Plota as imagens na janela
+  image(img_original,0,0);
+  image(img_transformada,0, img_original.height);
+  
+  noLoop();
+}
+
+// Aplica transformação de reflexão HORIZONTAL em uma imagem
+// my_img: Imagem a ser 'flipada'
+PImage refletir_eixo_y( PImage img_original )
+{
+  
+  PImage img = img_original.copy();
+  img.loadPixels();
+  
+  int img_altura = img.height, img_largura = img.width,  k, k_transf;;
+  color px_valor;
   
   for ( int x = 0; x < img_largura/2; x++ )
   {
@@ -38,17 +50,13 @@ void draw()
          k = y*img_largura + x;
          k_transf = img_largura*(1+y)-x-1;
 //      Executa flip
-         px_valor = img_transformada.pixels[k];
-         img_transformada.pixels[k] = img_transformada.pixels[k_transf];
-         img_transformada.pixels[k_transf] = px_valor;
+         px_valor = img.pixels[k];
+         img.pixels[k] = img.pixels[k_transf];
+         img.pixels[k_transf] = px_valor;
     }
   }
   
-  img_transformada.updatePixels();
+  img.updatePixels();
   
-  // Plota as imagens na janela
-  image(img_original,0,0);
-  image(img_transformada,0,img_altura);
-  
-  noLoop();
+  return img;
 }
