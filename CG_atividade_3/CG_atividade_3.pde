@@ -11,11 +11,13 @@ PROFESSOR: Jacques Facon
 */
 
 PImage img_original, img_transformada;
+String flip_aplicado;
 
 void setup()
 {
-  size(800,600);
+  size(620,560);
   img_original = loadImage("presidentu.jpeg");
+  textSize(25);
 }
 
 
@@ -23,19 +25,38 @@ void draw()
 {
   background(255);
   image(img_original,0,0);
+  flip_aplicado = "Imagem Original";
   if ( keyPressed )
   {
       if ( keyCode == UP || keyCode == DOWN ){
         // Flip vertical
         img_transformada = refletir_eixo_x( img_original );
+        flip_aplicado = "Flip VERTICAL";
       } else if ( keyCode == RIGHT || keyCode == LEFT ) {
         // Flip horizontal
         img_transformada = refletir_eixo_y( img_original );
+        flip_aplicado = "Flip HORIZONTAL";
       } else 
         img_transformada = img_original;
+     
+     image(img_transformada, 0, img_original.height);
       
-      image(img_transformada, 0, img_original.height);    
-  } 
+      // Insere legendas
+      fill(0);
+      rect(img_original.width/2 - 5,0, img_original.width, 30 );
+      rect(img_original.width/2 - 5, height - 30, img_original.width, height );
+      fill(255);
+      text("Imagem Original", img_original.width/2, 25 );
+      text(flip_aplicado, img_original.width/2, height - 5 );
+      
+  } else
+  {
+    fill(0);
+    text("Use as teclas para ver as transformações:\n ESQUERDA/DIREITA para Flip Horizontal\n CIMA/BAIXO para Flip Vertical ", 0, height - 150 );
+  }
+ 
+  
+  
   
   //noLoop();
 }
