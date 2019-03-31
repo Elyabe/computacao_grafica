@@ -29,15 +29,20 @@ void draw()
   
   if ( keyPressed )
   {
-      if ( keyCode == UP || keyCode == DOWN ){
-        // Flip vertical
-        img_transformada = refletir_eixo_x( img_original );
-        flip_aplicado = "Flip VERTICAL";
-      } else if ( keyCode == RIGHT || keyCode == LEFT ) {
-        // Flip horizontal
-        img_transformada = refletir_eixo_y( img_original );
-        flip_aplicado = "Flip HORIZONTAL";
-      } else 
+      if ( key == CODED )
+      {
+        if ( keyCode == UP || keyCode == DOWN ){
+          // Flip vertical
+          img_transformada = refletir_eixo_x( img_original );
+          flip_aplicado = "Flip VERTICAL";
+        } else if ( keyCode == RIGHT || keyCode == LEFT ) {
+          // Flip horizontal
+          img_transformada = refletir_eixo_y( img_original );
+          flip_aplicado = "Flip HORIZONTAL";
+        } else 
+          img_transformada = img_original;
+      
+      }else 
         img_transformada = img_original;
      
      image(img_transformada, 0, img_original.height);
