@@ -5,7 +5,7 @@ AUTOR: ELYABE ALVES SANTOS
 CURSO: CIÊNCIA DA COMPUTAÇÃO
 MATRÍCULA: 2014203834
 
-OBJETIVO: Implementação de flip HORIZONTAL em imagem
+OBJETIVO: Implementação de transformações (Reflexão) em imagem
 CRIADO EM: 27/09/2019
 PROFESSOR: Jacques Facon
 */
@@ -26,6 +26,7 @@ void draw()
   background(255);
   image(img_original,0,0);
   flip_aplicado = "Imagem Original";
+  
   if ( keyPressed )
   {
       if ( keyCode == UP || keyCode == DOWN ){
@@ -53,11 +54,8 @@ void draw()
   {
     fill(0);
     text("Use as teclas para ver as transformações:\n ESQUERDA/DIREITA para Flip Horizontal\n CIMA/BAIXO para Flip Vertical ", 0, height - 150 );
-  }
+  } 
  
-  
-  
-  
   //noLoop();
 }
 
@@ -76,6 +74,9 @@ PImage refletir_eixo_y( PImage img_original )
   {
     for ( int y = 0; y < img_altura; y++ )
     {
+         // mapeia k |-> k_transf 
+         // (x,y) -> (-x,y) porém só existem coordenadas positivas aqui 
+         // Com ajuste, (x,y) |-> (largura-1-x, y)
          k = y*img_largura + x;
          k_transf = img_largura*(1+y)-x-1;
 //      Executa flip
@@ -105,6 +106,9 @@ PImage refletir_eixo_x( PImage img_original )
   {
     for ( int y = 0; y < img_altura/2; y++ )
     {
+         // mapeia k |-> k_transf 
+         // (x,y) -> (x,-y) porém só existem coordenadas positivas aqui 
+         // Com ajuste, (x,y) |-> (x, altura-1-y)
          k = y*img_largura + x;
          k_transf = ( img_altura - 1 - y )*img_largura + x;
 //      Executa flip
