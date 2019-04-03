@@ -25,22 +25,22 @@ void draw()
 {
   background(255);
   image(img_original,0,0);
-  flip_aplicado = "Imagem Original";
+  //flip_aplicado = "Canal inver";
   
   if ( keyPressed )
   {
-        if ( keyCode == UP || keyCode == DOWN ){
-          // Flip vertical
-          img_transformada = inverter_cor_canal( img_original, 'r' );
-          flip_aplicado = "Flip VERTICAL";
-        } else if ( keyCode == LEFT ) {
-          // Flip horizontal
-          img_transformada = inverter_cor_canal( img_original, 'g' );
-          flip_aplicado = "Flip HORIZONTAL";
-        } else if ( keyCode == RIGHT ) {
-          img_transformada = inverter_cor_canal( img_original, 'b' );
-        } else
-          img_transformada = inverter_cor_canal( img_original, 't' );
+        //if ( key == 'r' || key == 'R' ){
+        //  // Flip vertical
+        //  img_transformada = inverter_cor_canal( img_original, 'r' );
+        //  flip_aplicado = "Flip VERTICAL";
+        //} else if ( keyCode == LEFT ) {
+        //  // Flip horizontal
+        //  img_transformada = inverter_cor_canal( img_original, 'g' );
+        //  flip_aplicado = "Flip HORIZONTAL";
+        //} else if ( keyCode == RIGHT ) {
+        //  img_transformada = inverter_cor_canal( img_original, 'b' );
+        //} else
+          img_transformada = inverter_cor_canal( img_original, key );
          
      image(img_transformada, 0, img_original.height);
       
@@ -50,7 +50,7 @@ void draw()
       rect(img_original.width/2 - 5, height - 30, img_original.width, height );
       fill(255);
       text("Imagem Original", img_original.width/2, 25 );
-      text(flip_aplicado, img_original.width/2, height - 5 );
+      text("Canal invertido", img_original.width/2, height - 5 );
       
   } else
   {
