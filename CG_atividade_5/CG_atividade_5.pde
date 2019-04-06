@@ -6,7 +6,7 @@ CURSO: CIÊNCIA DA COMPUTAÇÃO
 MATRÍCULA: 2014203834
 
 OBJETIVO: Implementação de conversão de imagem colorida para tons de cinza
-CRIADO EM: 03/04/2019
+CRIADO EM: 06/04/2019
 PROFESSOR: Jacques Facon
 */
 
@@ -64,8 +64,8 @@ void draw()
   //noLoop();
 }
 
-// Aplica transformação de reflexão HORIZONTAL em uma imagem
-// my_img: Imagem a ser 'flipada'
+// Aplica conversão em tons de cinza em uma imagem
+// my_img: Imagem alvo da conversão
 PImage converter_tons_cinza( PImage img_original, char metodo )
 {
   

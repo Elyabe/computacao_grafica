@@ -69,8 +69,8 @@ void draw()
   //noLoop();
 }
 
-// Aplica transformação de reflexão HORIZONTAL em uma imagem
-// my_img: Imagem a ser 'flipada'
+// Aplica inversão de cor em 1 ou mais canais em uma imagem
+// my_img: Imagem alvo da inversão de canais
 PImage inverter_cor_canal( PImage img_original, char canal )
 {
   
