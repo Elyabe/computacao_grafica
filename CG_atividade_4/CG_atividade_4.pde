@@ -11,11 +11,11 @@ PROFESSOR: Jacques Facon
 */
 
 PImage img_original, img_transformada;
-String flip_aplicado;
+String nome_canal;
 
 void setup()
 {
-  size(620,1020);
+  size(1220,610);
   img_original = loadImage("ft_perfil.jpg");
   textSize(25);
 }
@@ -25,37 +25,45 @@ void draw()
 {
   background(255);
   image(img_original,0,0);
-  //flip_aplicado = "Canal inver";
+  nome_canal = "";
   
   if ( keyPressed )
   {
-        //if ( key == 'r' || key == 'R' ){
-        //  // Flip vertical
-        //  img_transformada = inverter_cor_canal( img_original, 'r' );
-        //  flip_aplicado = "Flip VERTICAL";
-        //} else if ( keyCode == LEFT ) {
-        //  // Flip horizontal
-        //  img_transformada = inverter_cor_canal( img_original, 'g' );
-        //  flip_aplicado = "Flip HORIZONTAL";
-        //} else if ( keyCode == RIGHT ) {
-        //  img_transformada = inverter_cor_canal( img_original, 'b' );
-        //} else
-          img_transformada = inverter_cor_canal( img_original, key );
+      img_transformada = inverter_cor_canal( img_original, key );
          
-     image(img_transformada, 0, img_original.height);
+      image(img_transformada, img_original.width, 0);
       
       // Insere legendas
       fill(0);
-      rect(img_original.width/2 - 5,0, img_original.width, 30 );
-      rect(img_original.width/2 - 5, height - 30, img_original.width, height );
+      rect(0,0, img_original.width, 30 );
+      rect(img_original.width, height - 30, img_original.width, height );
       fill(255);
-      text("Imagem Original", img_original.width/2, 25 );
-      text("Canal invertido", img_original.width/2, height - 5 );
       
+      switch ( key )
+      {
+         case 'r':
+         case 'R':
+           nome_canal = "Vermelho"; 
+           break;
+         case 'g':
+         case 'G':
+           nome_canal = "Verde"; 
+           break;
+         case 'b':
+         case 'B':
+           nome_canal = "Azul"; 
+           break;
+         default:
+           nome_canal = "R/G/B";
+       } 
+      
+      text("Imagem Original", 5, 25 );
+      text("Canal(is) " + nome_canal + " invertido(s)", img_original.width, height - 5 );
+    
   } else
   {
     fill(0);
-    text("Use as teclas para ver as transformações:\n ESQUERDA/DIREITA para Flip Horizontal\n CIMA/BAIXO para Flip Vertical ", 0, height - 150 );
+    text("Use as teclas para ver as inversões:\n R: VERMELHO \n G: VERDE \n B: AZUL \n Outra: INVERTER TUDO", img_original.width + 20, height - 150 );
   } 
  
   //noLoop();
