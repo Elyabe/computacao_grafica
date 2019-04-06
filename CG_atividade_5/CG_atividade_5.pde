@@ -58,7 +58,7 @@ void draw()
   } else
   {
     fill(0);
-    text("Use as teclas para ver as conversões:\n 1: Método da média de canais \n 2: Método do canal máximo", img_original.width + 20, height - 150 );
+    text("Use as teclas para ver as conversões:\n 1: Método da média de canais \n 2: Método do canal máximo \n Outra: Método Clássico", img_original.width + 20, height - 150 );
   } 
  
   //noLoop();
