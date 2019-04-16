@@ -80,17 +80,20 @@ PImage rotacionar_imagem( PImage img_original, float theta )
   {
     for ( int y = 0; y < img_altura; y++ )
     {
+        // Nova origem é (w/2, y/2)
         float x_t = x - img_largura*0.5, y_t = y - img_altura*0.5; 
         pos = y * img_largura + x;
         P = new PVector( x_t, y_t );
         P_linha = transformar_coordenadas( P, theta );
+        
+        // Realiza translação de volta
         P_linha.x = P_linha.x +  img_largura*0.5;
         P_linha.y = P_linha.y +  img_altura*0.5;
         nova_pos = int(P_linha.y) * img_largura + int(P_linha.x);
-        if ( P_linha.x >=0 && P_linha.x < img_largura - 10 && P_linha.y >=0 && P_linha.y < img_altura - 10 )
-        {  img.pixels[ nova_pos ] = img_original.pixels[pos];}
-        else
-        { println("Pintou");}
+        
+        // Coordenadas válidas
+        if ( P_linha.x >=0 && P_linha.x < img_largura && P_linha.y >=0 && P_linha.y < img_altura )
+          img.pixels[ nova_pos ] = img_original.pixels[pos];
     }
   }
   
@@ -106,7 +109,6 @@ PVector transformar_coordenadas( PVector P, float theta )
 {
   PVector P_l = new PVector(0,0);
   float cos_theta = cos(theta), sin_theta = sin(theta);
-  //println(cos_theta + " " + sin_theta);
   P_l.x = P.x * cos_theta + P.y * sin_theta;
   P_l.y = -P.x * sin_theta  + P.y * cos_theta;
   
@@ -136,7 +138,7 @@ PImage mapeamento_reverso( PImage img_original, float theta )
   {
     for ( int y = mg_borda; y < img_altura-mg_borda; y++ )
     {
-        // Realiza rotação no ponto largura/2
+        // Realiza rotação no ponto largura/2, altura/2 como nova origem
         float x_t = x - img_largura*0.5, y_t = y - img_altura*0.5; 
         pos = y * img_largura + x;
         P = new PVector( x_t, y_t );
@@ -167,35 +169,34 @@ PImage mapeamento_reverso( PImage img_original, float theta )
         cor_D = new PVector( red(D), green(D), blue(D) );
         
         
-        PVector ctrlAB = new PVector(0,0,0), ctrlCD = new PVector(0,0,0), P_x = new PVector(0,0,0);
+        PVector ctrlAB, ctrlCD, P_x;
         
-        // Calcula ctrlAB
-        ctrlAB.add(cor_A);
-        ctrlAB.mult(-1);
-        ctrlAB.add(cor_B);
-        ctrlAB.mult(delta_col);
-        ctrlAB.add(cor_A);
-        
-        // Calcula ctrlCD
-        ctrlCD.add(cor_C);
-        ctrlCD.mult(-1);
-        ctrlCD.add(cor_D);
-        ctrlCD.mult(delta_col);
-        ctrlCD.add(cor_C);
-        
-        // Calcula cor do novo pixel
-        P_x.add(ctrlAB);
-        ctrlCD.mult(-1);
-        ctrlCD.add(ctrlCD);
-        ctrlCD.mult(delta_lin);
-        ctrlCD.add(ctrlAB);
+        ctrlAB = calcular_ctrl(cor_A,cor_B, delta_col);
+        ctrlCD = calcular_ctrl(cor_C,cor_D, delta_col);
+        P_x = calcular_ctrl(ctrlAB,ctrlCD, delta_lin);
         
         img.pixels[ pos ] = color( P_x.x, P_x.y, P_x.z );
-      
     }
   }
   
   img.updatePixels();
   
   return img;
+}
+
+// Calcula parametro ctrl 
+// cor_X : Vizinho A;
+// cor_Y : Vizinho B;
+// delta : Pode assumir delta_lin, delta_col
+PVector calcular_ctrl( PVector cor_X, PVector cor_Y, float delta )
+{
+    PVector ctrlX = new PVector(0,0,0);
+    
+    ctrlX.add(cor_X);
+    ctrlX.mult(-1);
+    ctrlX.add(cor_Y);
+    ctrlX.mult(delta);
+    ctrlX.add(cor_X);
+    
+    return ctrlX;
 }
